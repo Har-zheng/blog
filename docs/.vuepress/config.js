@@ -1,5 +1,5 @@
 module.exports = {
-    title: '郑宏振/Zheng Hong Zhen', // 设置网站标题
+    title: 'hongzhen Blog', // 设置网站标题
     description: '我的个人博客|博客主页', //描述
     dest: './dist',   // 设置输出目录
     port: 2233, //端口
@@ -7,7 +7,7 @@ module.exports = {
       // 添加导航栏
       nav: [
         { text: '主页', link: '/' }, // 导航条
-        { text: '前端总结', link: '/webbar/' },
+        { text: '前端学习', link: '/webbar/' },
         { text: '后端学习', link: '/backEnd/' },
         { text: '关于我', link: '/about/' },
         { text: 'github', link: 'https://github.com/Har-zheng' },
@@ -22,15 +22,19 @@ module.exports = {
       sidebar:{
         // 侧边栏在 /foo/ 上
         '/webbar/': [
-            '',
-            'one.md',
-            'two.md'
+            '', // 默认README.md
+            'Node.md',
+            'webpack.md',
+            'npm.md',
+            'model.md',
+            'nodemark.md',
+            'async.md'
         ],
         // 侧边栏在 /bar/ 上
         '/backEnd/': [
             '',
-            'one',
-            'two'
+            'koa.md',
+            'express.md',
         ]
       }
     }
