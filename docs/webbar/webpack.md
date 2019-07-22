@@ -386,6 +386,80 @@ alias|{Object}|{}|创建别名更容易导入一些模块
         exclude: /node_modules/
       },
 ```
+### 实例上的高级语法 未被解析  使用 @babel/polyfill 
+
+###  js 检验 eslint 
+```javascript
+   {  // loader 默认 是从右向左 从上到下
+      test: /\.js$/,
+      use: {
+        loader: 'eslint-loader',
+        options: {
+          enforce: 'pre' // previous  post
+        }
+      },
+    },
+```
+### 三方依赖 jQuery  
+> // export-loader 暴露全局 的 loader 内联loader
+// pre 前面执行的loader normal 普通的loader 内联loader 后置 postloader
+- 全局的暴露  import $ from 'expose-loader?$!jquery'
+- 二 配置文件中
+
+1 expose-loader 暴露到window
+2 ProvidePlugin 给每个模块提供一个$
+3 引入不打包的方式
+
+### 图片引入的几种方式
+>// webpack 打包我们的图片
+// 1 在js中创建图片来引入
+ // file-loader 默认会在内部生成一张图片 到build目录下
+ // 把生成的图片名字返回回来
+import './index.css'
+import favicon from './favicon.ico' // 把图片引入 返回的结果是一个新的图片地址
+
+let image = new Image();
+console.log(favicon)
+image.src = favicon ;  // 就是普通的字符串
+document.body.appendChild(image)
+
+// 2  在css引入 background('url)
+// 3 <img src=""/>
+#### html-withimg-loader -D  html内的图片解决方式  注: 暂未解决
+### url-laoder
+### 增加 cdn 的引入  选项中 配置 publicPath: 'http://www.zhztest.club'
+
+### 12 打包多页
+> chunks: ['home']
+```javascript
+  module.exports = {
+  // 多入口
+  mode: 'development', // 模式 默认两种模式 production development
+  entry: {
+    home: './src/index.js',
+    other: './src/other.js'
+  },
+  output: {
+    // [name] home, other 
+    filename: '[name].js',
+    path: path.resolve(__dirname, 'dist')
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './index.html',
+      filename: 'home.html',
+      chunks: ['home']
+    }),
+    new HtmlWebpackPlugin({
+      template: './index.html',
+      filename: 'other.html',
+      chunks: ['other', 'home']
+    })
+  ]
+}
+```
+
+
 
 
 
