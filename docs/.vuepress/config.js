@@ -28,7 +28,8 @@ module.exports = {
             'npm.md',
             'model.md',
             'nodemark.md',
-            'async.md'
+            'async.md',
+            'ArrowFunction.md'
         ],
         // 侧边栏在 /bar/ 上
         '/backEnd/': [
