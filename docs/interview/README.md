@@ -171,10 +171,10 @@
 ## es6
 
 1. let、const、var 的区别
->1.let/const 定义的变量不会出现变量提升，而 var 定义的变量会提升。<br/>
-2.相同作用域中，let 和 const 不允许重复声明，var 允许重复声明。<br/>
-3.const 声明变量时必须设置初始值<br/>
-4.const 声明一个只读的常量，这个常量不可改变。<br/>
+> 1.let/const 定义的变量不会出现变量提升，而 var 定义的变量会提升。<br/>
+> 2.相同作用域中，let 和 const 不允许重复声明，var 允许重复声明。<br/>
+> 3.const 声明变量时必须设置初始值<br/>
+> 4.const 声明一个只读的常量，这个常量不可改变。<br/>
 
 
 + 推荐观看阮一峰
@@ -185,4 +185,73 @@
 ## 闭包
 ## 原型链
 ## call,apply,bind 相同和区别,以及手写实现
+### 相同
+> call， apply， bind作用是改变运行时函数上下文this指向(改变函数执行时的上下文)。
+  同时都是Function.prototype的方法，返回值是当前调用方法的返回值，若方法无返回值则返回undefined
+
+* 三个方法第一个参数都是this要指向的对象,如果未指定这个参数或者undefind和null 则this 默认指向执行当前环境window,或者global对象
+### 区别
+1 call 接受传参 列表形式传参, 使用时直接调用函数
+```js
+foo.call(obj,参数1, 参数2, ...)
+```
+2 apply 接受传参 数组形式传参, 使用时直接调用函数
+```js
+foo.apply(obj, [参数1,参数2])
+```
+3 bind 接受传参 列表形式传参,返回包装后的新函数 使用时需要手写()调用
+```js
+const thatBind = foo.bind(obj,参数1,参数2)
+thatBind() 
+```
+### 手写实现
+1 call 
+```js
+Function.prototype.myCall = function (context){
+    const ctx = context || window  // 无参数时需要默认指向window
+    ctx.fun = this  // this当前调用者的方法
+    //将伪数组转成数组
+    const args = Array.from(arguments).slice(1)
+    //调用新建的函数 同时传参修改this指向
+    const res = arguments.length >1?ctx.func(...args): ctx.fun()
+    //防止全局污染
+    delete ctx.fun
+    return res
+}
+// 测试使用
+let obj = { name: 'zhz' }
+let funCall = function (){ console.log(this)}
+funCall.myCall(obj, 123, 798)
+```
+2 apply  跟call基本类似  传承方式不同
+```js
+Function.prototype.myApply = function (context){
+    // 无参数时需要默认指向window
+    const ctx = context || window
+    // this当前调用者的方法
+    ctx.fun = this
+    //调用新建的函数 同时传参修改this指向
+    const res = arguments[1]> 1?ctx.fun(...arguments[1]): ctx.fun()
+    //防止全局污染
+    delete ctx.fun
+    return res
+}
+```
+3 bind  需要返回函数方式
+```js
+Function.prototype.myBind = function (context){
+    // 对context进行深拷贝, 防止返回函数后在未执行期间,context被修改或污染
+    const ctx = JSON.parse(JSON.stringify(context)) || window  // 无参数时需要默认指向window
+    ctx.fun = this  // this当前调用者的方法
+    //将伪数组转成数组
+    const args = Array.from(arguments).slice(1)
+    return function () {
+        // bind 方法需要合并两次执行函数的参数
+        const Allargs = args.concat(Array.from(arguments))
+        return Allargs.length > 0? ctx.fun(...Allargs):ctx.fun()
+    }
+}
+```
+
+
 ## 
