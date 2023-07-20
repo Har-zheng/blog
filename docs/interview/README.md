@@ -239,7 +239,10 @@ arr[0](); // 0
 *  内存泄露问题  如注意会造成内存堆积占用 需要 el = null 可进行清空
 *  this指向问题  闭包函数在windows环境下 this指向window
 
-## 原型链
+## 原型&原型链
+### 先看图 
+
+![An image](.././.vuepress/public/images/prototype.png)
 
 
 ## call,apply,bind 相同和区别,以及手写实现
