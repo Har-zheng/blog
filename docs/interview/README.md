@@ -236,6 +236,10 @@ Function.prototype.myApply = function (context){
     delete ctx.fun
     return res
 }
+// 测试使用
+let obj = { name: 'zhz' }
+let funApply = function (x, y){ console.log(this, x, y)}
+funApply.myApply(obj, [123, 798])
 ```
 3 bind  需要返回函数方式
 ```js
@@ -251,7 +255,11 @@ Function.prototype.myBind = function (context){
         return Allargs.length > 0? ctx.fun(...Allargs):ctx.fun()
     }
 }
+// 测试使用
+let obj = { name: 'zhz' }
+let funBind = function (x, y){ console.log(this, x, y)}
+const bindRun =  funBind.myBind(obj, 123, 798)
+bindRun() 
 ```
-
 
 ## 
