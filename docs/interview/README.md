@@ -183,7 +183,65 @@
 后期一点点更新
 
 ## 闭包
+> 闭包（closure）是一个函数以及其捆绑的周边环境状态（lexical environment，词法环境）的引用的组合。换而言之，闭包让开发者可以从内部函数访问外部函数的作用域。在 JavaScript 中，闭包会随着函数的创建而被同时创建。--MDN
+
+> 通俗讲,闭包是一个函数，是有权访问另外一个函数作用域中的变量的函数。内部函数将能够访问到外部函数作用域中的变量，即使外部函数已经执行完毕。
+
+```js
+function outer() {
+ let a = '1'
+ let inner = function () {
+ console.info(a)
+ }
+ return inner // inner 就是一个闭包函数，因为他能够访问到outer函数的作用域
+ }
+outer()
+```
+
+### 案例使用
+>在函数式编程中，闭包经常用于偏函数应用和柯里化
+* ajax请求的成功回调
+* 事件绑定的回调方法
+* setTimeout的延时回调
+* 函数内部返回另一个匿名函数
+* 构造函数的私有属性
+* 计算缓存
+* 函数节流、防抖
+```js
+// 事件绑定的回调方法
+let countClicked = 0;
+myButton.addEventListener('click', function handleClick() {
+    countClicked++;
+    myText.innerText = `You clicked ${countClicked} times`;
+});
+// 回调
+function foo(message, time) {
+    setTimeout(function callback() {
+        console.log(message); // Hello, World!
+    }, 1000);
+}
+foo('Hello, World!', 1000);
+//闭包经典问题for循环中的函数
+//如何保存循环中的i值  i 这个变量是被共享的。当循环结束之后，i是最后的结束值,用闭包的思路是让i在每次迭代的时候，都产生一个私有的作用域
+var arr = [];
+for(var i = 0; i< 5; i++){
+    arr[i] = (function(i){
+        return function(){
+            return i;
+        }
+    })(i)
+}
+
+arr[0](); // 0
+
+```
+### 缺点
+*  内存泄露问题  如注意会造成内存堆积占用 需要 el = null 可进行清空
+*  this指向问题  闭包函数在windows环境下 this指向window
+
 ## 原型链
+
+
 ## call,apply,bind 相同和区别,以及手写实现
 ### 相同
 > call， apply， bind作用是改变运行时函数上下文this指向(改变函数执行时的上下文)。
@@ -259,7 +317,7 @@ Function.prototype.myBind = function (context){
 let obj = { name: 'zhz' }
 let funBind = function (x, y){ console.log(this, x, y)}
 const bindRun =  funBind.myBind(obj, 123, 798)
-bindRun() 
+bindRun()
 ```
 
 ## 
