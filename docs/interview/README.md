@@ -275,7 +275,10 @@ arr[0](); // 0
 * 通过__proto__隐式原型,查找属性或方法的过程 即原型链
 * __proto__查找过程中一直到Object.prototype  而它的__proto__指向null
 * 原型链又叫隐式原型链，是由__proto__属性串联起来，原型链的尽头是Object.prototype
+
 * ![An image](.././.vuepress/public/images/__proto__.png)
+
+
 
 
 
@@ -358,4 +361,5 @@ const bindRun =  funBind.myBind(obj, 123, 798)
 bindRun()
 ```
 
-## 
+## 防抖和节流
+###  节流
