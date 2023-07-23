@@ -363,3 +363,122 @@ bindRun()
 
 ## 防抖和节流
 ###  节流
+> 在一个相应的时间内中进行一次事件处理,小于该周期时间则不会触发
+* 案例场景 鼠标移动、页面尺寸缩放resize、滚动条滚动 就可以加节流
+```js
+function throttle(fn,timeout){
+    let flag = true
+    return function(){
+        if(flag){
+            setTimeout(() => {
+                fn.apply(this,arguments)
+                flag = true
+            }, timeout);
+        }
+        flag = false
+    }
+}
+```
+
+### 防抖
+> 在一个相应的时间内中进行一次事件处理,如果在时间周期内则重新计算事件函数执行时间
+*开发使用场景- 搜索框防抖
+```js
+function debounce(fn,timeout){
+    let timer = null
+    return function(){
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+            fn.apply(window,arguments)
+        }, timeout);
+    }
+}
+```
+
+## 深拷贝&浅拷贝
+>  基本实时数据类型在栈内存中存放  引用类型在堆内存中
+### 深拷贝
+#### 深拷贝 实现案例
+```js
+  // map 用于记录出现过的对象, 解决循环引用
+const deepClone = (target, map = new WeakMap()) => {
+  // 1. 对于基本数据类型(string、number、boolean……), 直接返回
+  if (typeof target !== 'object' || target === null) {
+    return target
+  }
+
+  // 2. 函数 正则 日期 MAP Set: 执行对应构造题, 返回新的对象
+  const constructor = target.constructor
+  if (/^(Function|RegExp|Date|Map|Set)$/i.test(constructor.name)) {
+    return new constructor(target)
+  }
+
+  // 3. 解决 共同引用 循环引用等问题
+  // 借用 `WeakMap` 来记录每次复制过的对象, 在递归过程中, 如果遇到已经复制过的对象, 则直接使用上次拷贝的对象, 不重新拷贝
+  if (map.get(target)) {
+    return map.get(target)
+  }
+
+  // 4. 创建新对象
+  const cloneTarget = Array.isArray(target) ? [] : {}
+  map.set(target, cloneTarget)
+
+  // 5. 循环 + 递归处理
+  Object.keys(target).forEach(key => {
+    cloneTarget[key] = deepClone(target[key], map);
+  })
+
+  // 6. 返回最终结果
+  return cloneTarget
+}
+```
+
+#### 快捷方式JSON.parse(JSON.stringify())
+> 注意此方法有六个局限性
+
+1.NaN Infinity -Infinity 会被序列化为 null
+
+2.Symbol undefined function 会被忽略(对应属性会丢失)
+
+3.Date  将得到的是一个字符串
+
+4.拷贝 RegExp Error 对象,得到是空对象{}
+
+5 多个属性如果复用同一个 引用数据 A 时, 拷贝的结果和原数据结构不一致(会完整拷贝多个 引用数据 A), 如下代码所示: 对象 obj 中 base 和 children 指向同一个对象, 但是 JSON.parse(JSON.stringify()) 复制出来的对象 res 中 base 和 children 指向了不同的对象, 也就是说拷贝后的 res 对象和原对象 obj 数据结构不一致
+
+#### 使用 structuredClone
+> structuredClone 是一个新的 API 可用于对数据进行 深拷贝, 同时还支持循环引用
+
+#### 第三方库  lodash 的 cloneDeep 方法
+
+### 浅拷贝
+#### 实现按案例
+```js
+const clone = (target) => {
+  // 1. 对于基本数据类型(string、number、boolean……), 直接返回
+  if (typeof target !== 'object' || target === null) {
+    return target
+  }
+
+  // 2. 创建新对象
+  const cloneTarget = Array.isArray(target) ? [] : {}
+
+  // 3. 循环 + 递归处理
+  Object.keys(target).forEach(key => {
+    cloneTarget[key] = target[key];
+  })
+
+  return cloneTarget
+}
+const res= clone({ name: 1, user: { age: 18 } })
+```
+#### Object.assign()
+#### 展开运算符 ...
+#### 数组方法 .concat()  .slice() .from
+> 它们的特点都是不改变原数组、同时返回一个新的数组
+#### 第三方库 clone 
+
+*
+
+
+
