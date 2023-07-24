@@ -1,6 +1,6 @@
 # javascript
    JavaScript，通常缩写为JS，是一种高级的，解释执行的编程语言。 JavaScript是一门基于原型、函数先行的语言，是一门多范式的语言，它支持面向对象编程，命令式编程，以及函数式编程。 它提供语法来操控文本、数组、日期以及正则表达式等，不支持I/O，比如网络、存储和图形等，但这些都可以由它的宿主环境提供支持。
-  
+
 ## js继承的几种方式
 1. 属性拷贝 (就是将对象的成员复制一份给需要继承的对象)
    ```javascript
@@ -59,7 +59,7 @@
   ```javascript
     // 创建父构造函数
   function SuperClass(){
-      this.name = 'liyajie';
+      this.name = 'zhz';
       this.age = 25;
       this.showName = function(){
           console.log(this.name);
@@ -80,9 +80,9 @@
   SubClass.prototype.constructor = SubClass;
 
   var child = new SubClass();
-  console.log(child.name); // liyajie
+  console.log(child.name); // zhz
   console.log(child.age);// 25
-  child.showName();// liyajie
+  child.showName();// zhz
   child.showAge();// 25
   console.log(child.friends); // ['小名','小强']
 
@@ -166,21 +166,6 @@
     Student.prototype.constructor = Student;
   ```
   +  这样就将Person的原型对象上的成员拷贝到了Student的原型上了, 这种方式没有属性共享的问题.
-
-
-## es6
-
-1. let、const、var 的区别
-> 1.let/const 定义的变量不会出现变量提升，而 var 定义的变量会提升。<br/>
-> 2.相同作用域中，let 和 const 不允许重复声明，var 允许重复声明。<br/>
-> 3.const 声明变量时必须设置初始值<br/>
-> 4.const 声明一个只读的常量，这个常量不可改变。<br/>
-
-
-+ 推荐观看阮一峰
-[ECMAScript 6 入门](http://es6.ruanyifeng.com/ "ECMAScript 6 入门")
-
-后期一点点更新
 
 ## 闭包
 > 闭包（closure）是一个函数以及其捆绑的周边环境状态（lexical environment，词法环境）的引用的组合。换而言之，闭包让开发者可以从内部函数访问外部函数的作用域。在 JavaScript 中，闭包会随着函数的创建而被同时创建。--MDN
@@ -478,7 +463,8 @@ const res= clone({ name: 1, user: { age: 18 } })
 > 它们的特点都是不改变原数组、同时返回一个新的数组
 #### 第三方库 clone 
 
-*
+
+
 
 
 
