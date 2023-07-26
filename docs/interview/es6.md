@@ -1,4 +1,4 @@
-# ES6
+  # ES6
 > ECMAScript6 是新的一代JS语言标准(2015年6月正式发布)
 ### let,const
 #### let
