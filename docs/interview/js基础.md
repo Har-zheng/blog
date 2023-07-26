@@ -464,6 +464,9 @@ const res= clone({ name: 1, user: { age: 18 } })
 #### 第三方库 clone 
 
 
+### infinity代表什么数据？
+> 在JS中Infinity用于表示无穷大的数值，且不是常量，即无法明确表示它到底有多大。可以通过isFinite(val)判断当前数字是否是无穷大，函数返回true表示不是无穷大，返回false表示是无穷大。
+
 
 
 
