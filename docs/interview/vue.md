@@ -102,6 +102,25 @@ export default {
 6 $attrs / $listeners
 
 7 vuex
+## 父组件/子组件 在一起时生命周期顺序
+> 父组件beforeCreated-> 父组件Created-> 子组件beforeCreated-> 子组件Created-> 子组件beforeMount -> 子组件mounted-> 父组件mounted
+### 子组件更新过程
+>  父组件beforeUpdate-> 子组件beforeUpdate -> 子组件update-> 父组件update
+
+### 销毁过程
+>  父组件beforeDestory-> 子组件beforeDestory -> 子组件Destory -> 父组件Destory
+
+## vue中的路由模式
+1 hash 模式
+* hashchange事件进行监听
+
+2 history
+
+* 利用h5新增的pushstate和replacestate将地址直接压入历史记录栈中，通过popstate进行监听实现页面跳转的。
+
+3 abstract (新)
+
+* 该种模式支持js运行环境，比如在nodejs中。当识别不到window的api的时候就会强制进入该种模式
 
 
 
