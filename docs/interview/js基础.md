@@ -467,6 +467,50 @@ const res= clone({ name: 1, user: { age: 18 } })
 ### infinity代表什么数据？
 > 在JS中Infinity用于表示无穷大的数值，且不是常量，即无法明确表示它到底有多大。可以通过isFinite(val)判断当前数字是否是无穷大，函数返回true表示不是无穷大，返回false表示是无穷大。
 
+##  event loop 事件循环
+> JavaScript代码的执行过程中，除了依靠函数调用栈来搞定函数的执行顺序外，还依靠任务队列(task queue)来搞定另外一些代码的执行。整个执行过程，我们称为事件循环过程。一个线程中，事件循环是唯一的，但是任务队列可以拥有多个。任务队列又分为macro-task（宏任务）与micro-task（微任务），在最新标准中，它们被分别称为task与jobs
+
+![Alt text](.././.vuepress/public/images/image.png)
+![Alt text](.././.vuepress/public/images/image-1.png)
+
+### macro-task大概包括(宏任务)：
+* script (整体代码)
+* setTimeout
+* setInterval
+* setImmediate
+* I/O
+* UI render
+### micro-task大概包括(微任务):
+* process.nextTick
+* Promise 
+* async/await (实际是Promise )
+* MutationObserver(html5 新特性)
+
+### node 中的事件循环
+> 浏览器中有事件循环，node 中也有，事件循环是 node 处理非阻塞 I/O 操作的机制，node中事件循环的实现是依靠的libuv引擎
+
+* 宏任务和微任务
+#### macro-task  宏任务
+* script (整体代码)
+* setTimeout
+* setInterval
+* setImmediate
+* I/O
+#### micro-task 微任务
+* process.nextTick(与普通微任务有区别，在微任务队列执行之前执行)
+* new Promise().then(回调)等。
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
