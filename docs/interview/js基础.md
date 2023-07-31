@@ -500,6 +500,9 @@ const res= clone({ name: 1, user: { age: 18 } })
 * process.nextTick(与普通微任务有区别，在微任务队列执行之前执行)
 * new Promise().then(回调)等。
 
+## 事件冒泡
+
+
 
 
 
