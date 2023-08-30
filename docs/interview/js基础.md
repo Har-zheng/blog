@@ -297,7 +297,7 @@ Function.prototype.myCall = function (context){
     //将伪数组转成数组
     const args = Array.from(arguments).slice(1)
     //调用新建的函数 同时传参修改this指向
-    const res = arguments.length >1?ctx.func(...args): ctx.fun()
+    const res = arguments.length >1?ctx.fun(...args): ctx.fun()
     //防止全局污染
     delete ctx.fun
     return res

@@ -81,7 +81,7 @@ x ?? (x = y)
 
 ### WeakSet
 > WeakSet 结构与 Set 类似，也是不重复的值的集合。但是，它与 Set 有两个区别。
-首先，WeakSet 的成员只能是对象，而不能是其他类型的值。
+> 首先，WeakSet 的成员只能是对象，而不能是其他类型的值。
 
 ### Map
 > 它类似于对象，也是键值对的集合，但是“键”的范围不限于字符串，各种类型的值（包括对象）都可以当作键
@@ -141,7 +141,7 @@ items.forEach(
 
 ### apply()
 > apply方法拦截函数的调用、call和apply操作。
-apply方法可以接受三个参数，分别是目标对象、目标对象的上下文对象（this）和目标对象的参数数组。
+> apply方法可以接受三个参数，分别是目标对象、目标对象的上下文对象（this）和目标对象的参数数组。
 
 ### has() 
 > has()方法用来拦截HasProperty操作，即判断对象是否具有某个属性时，这个方法会生效。典型的操作就是in运算符。
@@ -247,6 +247,68 @@ iter.next() // { value: undefined, done: true }
 > ES2017 标准引入了 async 函数，使得异步操作变得更加方便。async 函数是什么？一句话，它就是 Generator 函数的语法糖。
 
 > async函数返回一个 Promise 对象，可以使用then方法添加回调函数。当函数执行的时候，一旦遇到await就会先返回，等到异步操作完成，再接着执行函数体内后面的语句
+
+### 手写 Promise
+```js
+  // 三个状态
+  const PENDING = "PENDING"
+  const FULEFILLED = "FULEFILLED"  
+  const REJECTED = "REJECTED"
+  class Promise{
+        constructor(executor){
+            //  1 默认状态 
+            this.status = "PENDING"
+            // 2 内部维护的变量值
+            this.value = undefined
+            this.reason = undefined // 失败时的提示信息
+            // 存放回调
+            this.onResolvedCallback = []
+            this.onRejectCallback = []
+            
+            let resolve = value=> {
+                if(this.status === PENDING){
+                    this.status = PENDING
+                    this.value = value
+                    this.onResolvedCallback.forEach(fn=> fn())
+                }
+            }
+
+            let reject = reason=> {
+                if(this.status === REJECTED){
+                    this.status = REJECTED
+                    this.reason = reason
+                    this.onRejectCallback.forEach(fn=> fn())
+                }
+            }
+
+
+
+            try {
+                executor(resolve, reject)
+            }catch (err){
+                reject(err)
+            }
+        }
+        then(onFulfilled, onRejected){
+            if(this.status === FULEFILLED){
+                onFulfilled(this.value)
+            }
+            if(this.status === REJECTED){
+                onRejected(this.reason)
+            }
+            if(this.status === PENDING){
+                // 存放队列
+                this.onResolvedCallbacks.push(()=> {
+                    onFulfilled(this.value)
+                })
+                this.onRejectedCallbacks.push(()=> {
+                    onRejected(this.value)
+                })
+            }
+        }
+  }
+
+```
 
 
 
