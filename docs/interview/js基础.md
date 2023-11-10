@@ -295,7 +295,12 @@ Function.prototype.myCall = function (context){
     const ctx = context || window  // 无参数时需要默认指向window
     ctx.fun = this  // this当前调用者的方法
     //将伪数组转成数组
-    const args = Array.from(arguments).slice(1)
+    const args = Array.from(
+      
+
+         
+         
+    ).slice(1)
     //调用新建的函数 同时传参修改this指向
     const res = arguments.length >1?ctx.fun(...args): ctx.fun()
     //防止全局污染
